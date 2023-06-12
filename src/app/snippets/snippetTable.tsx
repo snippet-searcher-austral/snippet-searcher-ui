@@ -2,11 +2,11 @@ import {FC} from 'react'
 import Typography from '@mui/material/Typography'
 import {CircularProgress, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material'
 import {useQuery} from '@tanstack/react-query'
-import {getSnippetDescriptors} from '@/data/snippet'
+import {listSnippetDescriptors} from '@/data/snippet'
 
 export const SnippetTable: FC = () => {
 
-  const {data, isFetching} = useQuery(['snippet-descriptors'], getSnippetDescriptors)
+  const {data, isFetching} = useQuery(['snippets', 'descriptors'], listSnippetDescriptors)
 
   return (
     <>
