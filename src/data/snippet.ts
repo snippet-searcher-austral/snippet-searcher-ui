@@ -1,4 +1,4 @@
-import {FakeSnippetStore} from '@/data/fakeSnippetStore'
+import {FakeSnippetStore} from '@/data/fake/fakeSnippetStore'
 import {z} from 'zod'
 
 export const ComplianceSchema = z.enum(['pending', 'failed', 'not-compliant', 'compliant'])
@@ -15,21 +15,14 @@ export const SnippetDescriptorSchema = z.object({
 })
 export type SnippetDescriptor = z.infer<typeof SnippetDescriptorSchema>
 
+export const SnippetSchema = SnippetDescriptorSchema.and(z.object({
+  content: z.string()
+}))
+export type Snippet = z.infer<typeof SnippetSchema>
+
 export const CreateSnippetSchema = z.object({
   name: z.string(),
   type: SnippetTypeSchema,
   content: z.string()
 })
 export type CreateSnippet = z.infer<typeof CreateSnippetSchema>
-
-// The purpose of this "store" is to simulate a limited backend with storage.
-const fakeSnippetStore = new FakeSnippetStore()
-
-export const listSnippetDescriptors = (): Promise<SnippetDescriptor[]> => new Promise(resolve => {
-  setTimeout(() => resolve(fakeSnippetStore.listSnippetDescriptors()), 1000)
-})
-
-export const createSnippet = (createSnippet: CreateSnippet): Promise<SnippetDescriptor> => new Promise(resolve => {
-  setTimeout(() => resolve(fakeSnippetStore.createSnippet(createSnippet)), 1000)
-})
-

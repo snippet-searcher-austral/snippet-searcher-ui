@@ -1,12 +1,16 @@
+'use client'
+
 import {FC} from 'react'
 import Typography from '@mui/material/Typography'
-import {CircularProgress, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material'
+import {CircularProgress, Grid, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material'
 import {useQuery} from '@tanstack/react-query'
-import {listSnippetDescriptors} from '@/data/snippet'
+import {useOperations} from '@/data/operationsContext'
+import {SnippetRow} from '@/app/snippets/snippetRow'
 
 export const SnippetTable: FC = () => {
 
-  const {data, isFetching} = useQuery(['snippets', 'descriptors'], listSnippetDescriptors)
+  const {snippetOperations} = useOperations()
+  const {data: snippets, isFetching} = useQuery(['snippets', 'descriptors'], snippetOperations.listSnippetDescriptors)
 
   return (
     <>
@@ -14,7 +18,11 @@ export const SnippetTable: FC = () => {
         Snippets
       </Typography>
       {isFetching ? (
-        <CircularProgress/>
+        <Grid container justifyContent="center">
+          <Grid item xs={1}>
+            <CircularProgress/>
+          </Grid>
+        </Grid>
       ) : (
         <Table size="medium">
           <TableHead>
@@ -25,12 +33,8 @@ export const SnippetTable: FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.type}</TableCell>
-                <TableCell>{row.compliance}</TableCell>
-              </TableRow>
+            {snippets && snippets.map((snippet) => (
+              <SnippetRow key={snippet.id} snippet={snippet}/>
             ))}
           </TableBody>
         </Table>

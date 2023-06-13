@@ -2,15 +2,17 @@
 
 import React, {FC, useCallback} from 'react'
 import {Paper, Typography} from '@mui/material'
-import {createSnippet, CreateSnippet} from '@/data/snippet'
+import {CreateSnippet} from '@/data/snippet'
 import {CreateSnippetForm} from '@/app/snippets/create/createSnippetForm'
 import {useMutation} from '@tanstack/react-query'
 import {useRouter} from 'next/navigation'
+import {useOperations} from '@/data/operationsContext'
 
 const CreateSnippetPage: FC = () => {
   const router = useRouter()
 
-  const {mutate} = useMutation(['snippets'], createSnippet)
+  const {snippetOperations} = useOperations()
+  const {mutate} = useMutation(['snippets'], snippetOperations.createSnippet)
 
   let handleCreate: (createSnippet: CreateSnippet) => void
   handleCreate = useCallback((createSnippet: CreateSnippet) => {

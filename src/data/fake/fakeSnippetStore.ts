@@ -1,4 +1,4 @@
-import {Compliance, CreateSnippet, SnippetDescriptor, SnippetType} from '@/data/snippet'
+import {Compliance, CreateSnippet, Snippet, SnippetDescriptor, SnippetType} from '@/data/snippet'
 import { v4 as uuid } from 'uuid'
 
 
@@ -46,6 +46,10 @@ export class FakeSnippetStore {
     })
   }
 
+  listSnippetDescriptors(): SnippetDescriptor[] {
+    return Array.from(this.snippetMap, ([_, value]) => value)
+  }
+
   createSnippet(createSnippet: CreateSnippet): SnippetDescriptor {
     const snippet: StoredSnippet = {
       id: uuid(),
@@ -60,7 +64,7 @@ export class FakeSnippetStore {
     return snippet
   }
 
-  listSnippetDescriptors(): SnippetDescriptor[] {
-    return Array.from(this.snippetMap, ([_, value]) => value)
+  getSnippetById(id: string): Snippet | undefined {
+    return this.snippetMap.get(id)
   }
 }
