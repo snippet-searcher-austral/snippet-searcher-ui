@@ -5,7 +5,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {QueryClient} from '@tanstack/query-core'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {OperationsContextType, OperationsProvider} from '@/data/operationsContext'
-import {FakeSnippetOperations} from '@/data/fake/fakeSnippetOperations'
+import {ApiSnippetOperations} from "@/data/api/apiSnippetOperations";
 
 type GlobalContextType = {
   children: ReactNode
@@ -14,7 +14,7 @@ type GlobalContextType = {
 const defaultTheme = createTheme()
 const queryClient = new QueryClient()
 const operations: OperationsContextType = {
-  snippetOperations: new FakeSnippetOperations()
+  snippetOperations: new ApiSnippetOperations()
 }
 
 export const GlobalContext: FC<GlobalContextType> = ({children}) => {

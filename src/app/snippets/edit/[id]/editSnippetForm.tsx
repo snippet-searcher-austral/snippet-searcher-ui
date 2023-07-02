@@ -13,7 +13,7 @@ export type CreateSnippetFormProps = {
 }
 
 export const EditSnippetForm: FC<CreateSnippetFormProps> = ({snippet, onUpdate, onCancel}) => {
-
+  console.log(snippet)
   return (
     <FormContainer
       resolver={zodResolver(UpdateSnippetSchema)}
