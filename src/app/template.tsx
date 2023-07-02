@@ -11,16 +11,13 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import Badge from '@mui/material/Badge'
 import Container from '@mui/material/Container'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import {SidebarItems} from './navigationItems'
 import React, {FC, ReactNode, useState} from 'react'
 import {useUser} from "@auth0/nextjs-auth0/client";
 import {Avatar, Button, Menu, MenuItem} from "@mui/material";
-import ProfileIcon from "@/app/profileIcon";
 
 type TemplateProps = {
   children: ReactNode
