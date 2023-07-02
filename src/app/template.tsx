@@ -17,7 +17,10 @@ import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import {SidebarItems} from './navigationItems'
-import {FC, ReactNode, useState} from 'react'
+import React, {FC, ReactNode, useState} from 'react'
+import {useUser} from "@auth0/nextjs-auth0/client";
+import {Avatar, Button, Menu, MenuItem} from "@mui/material";
+import ProfileIcon from "@/app/profileIcon";
 
 type TemplateProps = {
   children: ReactNode
@@ -80,6 +83,20 @@ const Template: FC<TemplateProps> = ({children}) => {
     setOpen(!open)
   }
 
+  const [profileActionsAnchorEl, setProfileActionsAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openProfileActions = Boolean(profileActionsAnchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setProfileActionsAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setProfileActionsAnchorEl(null);
+  };
+  const { user, error, isLoading } = useUser();
+
+  const logout = (): void => {
+    window.location.href = "/api/auth/logout";
+  }
+
   return <Box sx={{display: 'flex'}}>
     <CssBaseline/>
     <AppBar position="absolute" open={open}>
@@ -100,6 +117,25 @@ const Template: FC<TemplateProps> = ({children}) => {
         >
           <MenuIcon/>
         </IconButton>
+        <Box>
+          <Button onClick={handleClick}>
+            {!isLoading &&
+                <Avatar alt={user?.name!} src={user?.picture!} />
+            }
+          </Button>
+
+          <Menu
+              id="basic-menu"
+              anchorEl={profileActionsAnchorEl}
+              open={openProfileActions}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+          >
+            <MenuItem onClick={() => logout()}>Logout</MenuItem>
+          </Menu>
+        </Box>
         <Typography
           component="h1"
           variant="h6"
