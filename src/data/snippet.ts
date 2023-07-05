@@ -1,7 +1,7 @@
 import {FakeSnippetStore} from '@/data/fake/fakeSnippetStore'
 import {z} from 'zod'
 
-export const ComplianceSchema = z.enum(['pending', 'failed', 'not-compliant', 'compliant'])
+export const ComplianceSchema = z.enum(['PENDING', 'FAILED', 'NOT_COMPLIANT', 'COMPLIANT'])
 export type Compliance = z.infer<typeof ComplianceSchema>
 
 export const SnippetTypeSchema = z.enum(['PRINTSCRIPT'])

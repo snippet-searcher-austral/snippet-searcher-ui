@@ -22,11 +22,15 @@ export const SnippetRow: FC<SnippetRowType> = ({snippet}) => {
     router.push(`/snippets/edit/${snippet.id}`)
   }, [router, snippet.id])
 
+  const complianceToLower = (compliance: string) => {
+     return compliance.toLowerCase().replace(/_/g, ' ')
+  }
+
   return (
     <TableRow key={snippet.id}>
       <TableCell>{snippet.name}</TableCell>
       <TableCell>{snippet.type}</TableCell>
-      <TableCell>{snippet.compliance}</TableCell>
+      <TableCell>{complianceToLower(snippet.compliance)}</TableCell>
       <TableCell>
         <IconButton title='View snippet' onClick={handleView}>
           <ViewIcon />
