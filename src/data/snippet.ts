@@ -11,7 +11,8 @@ export const SnippetDescriptorSchema = z.object({
   id: z.string(),
   name: z.string(),
   type: SnippetTypeSchema,
-  compliance: ComplianceSchema
+  compliance: ComplianceSchema,
+  access: z.enum(['READ', 'WRITE', 'DELETE'])
 })
 export type SnippetDescriptor = z.infer<typeof SnippetDescriptorSchema>
 

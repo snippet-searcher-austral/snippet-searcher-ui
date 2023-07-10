@@ -53,9 +53,11 @@ const CreateSnippetPage: FC<CreateSnippetPageProps> = ({params}) => {
             </Grid>
             <Grid item xs={12}>
               <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                <Button variant="contained" sx={{mt: 3, ml: 1}} onClick={handleGoToEdit}>
-                  Go to Edit
-                </Button>
+                  { snippet.access == 'WRITE' &&
+                      <Button variant="contained" sx={{mt: 3, ml: 1}} onClick={handleGoToEdit}>
+                        Go to Edit
+                    </Button>
+                  }
                 <Button sx={{mt: 3, ml: 1}} onClick={handleGoToSnippets}>
                   Go to Snippets
                 </Button>

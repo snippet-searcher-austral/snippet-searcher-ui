@@ -2,8 +2,7 @@ import {SnippetOperations} from "@/data/snippetOperations";
 import autoBind from "auto-bind";
 import {CreateSnippet, Snippet, SnippetDescriptor, UpdateSnippet} from "@/data/snippet";
 
-const baseUrl = 'https://snippet-searcher.southafricanorth.cloudapp.azure.com/snippet-manager/'
-// const baseUrl = 'http://localhost:8080/'
+const baseUrl = process.env.SNIPPET_API_URL || 'https://snippet-searcher.southafricanorth.cloudapp.azure.com/snippet-manager/'
 
 export class ApiSnippetOperations implements SnippetOperations {
     constructor() {
@@ -11,10 +10,13 @@ export class ApiSnippetOperations implements SnippetOperations {
     }
 
     createSnippet(createSnippet: CreateSnippet): Promise<SnippetDescriptor> {
+        const token = localStorage.getItem('accessToken');
+
         return fetch(baseUrl + 'snippet', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(createSnippet)
         }).then(response => response.json()) // parse the response as JSON
@@ -24,7 +26,15 @@ export class ApiSnippetOperations implements SnippetOperations {
     }
 
     getSnippetById(id: string): Promise<Snippet | undefined> {
-        return fetch(baseUrl + 'snippet/' + id)
+        const token = localStorage.getItem('accessToken');
+
+        return fetch(baseUrl + 'snippet/' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => response.json()) // parse the response as JSON
             .then(data => {
                 return data; // return the data with additional property
@@ -32,15 +42,25 @@ export class ApiSnippetOperations implements SnippetOperations {
     }
 
     async listSnippetDescriptors(): Promise<SnippetDescriptor[]> {
-        return await fetch(baseUrl + 'snippet')
-            .then(response => response.json());
+        const token = localStorage.getItem('accessToken');
+
+        return await fetch(baseUrl + 'snippet', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(response => response.json());
     }
 
     updateSnippetById(id: string, updateSnippet: UpdateSnippet): Promise<SnippetDescriptor> {
+        const token = localStorage.getItem('accessToken');
+
         return fetch(baseUrl + 'snippet/' + id, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(updateSnippet)
         }).then(response => response.json()) // parse the response as JSON

@@ -35,9 +35,11 @@ export const SnippetRow: FC<SnippetRowType> = ({snippet}) => {
         <IconButton title='View snippet' onClick={handleView}>
           <ViewIcon />
         </IconButton>
-        <IconButton title='Edit snippet' onClick={handleEdit}>
-          <EditIcon />
-        </IconButton>
+          { snippet.access == 'WRITE' &&
+              <IconButton title='Edit snippet' onClick={handleEdit}>
+                <EditIcon />
+            </IconButton>
+          }
       </TableCell>
     </TableRow>
   )
