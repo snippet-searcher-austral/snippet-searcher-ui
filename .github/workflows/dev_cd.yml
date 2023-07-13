@@ -2,7 +2,7 @@ name: "Continuous Deployment"
 on:
   push:
     branches:
-      - development
+      - develop
 jobs:
   publish-dev-image:
     name: Push Dev Docker image to GitHub Packages
@@ -22,7 +22,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          file: Dockerfile_dev
+          file: Dockerfile
           push: true
           tags: |
             ghcr.io/snippet-searcher-austral/app-dev:latest
