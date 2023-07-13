@@ -6,9 +6,11 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
-RUN npm run build
+RUN npm i
 
 COPY . .
+
+RUN npm run build
 
 EXPOSE 3000
 
